@@ -1,5 +1,9 @@
 import { useState } from "react";
 import type { FlashcardViewProps } from "../types/flashcardViewProps";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github.css";
 
 export default function FlashcardView({ flashcards, onBack }: FlashcardViewProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -42,7 +46,9 @@ export default function FlashcardView({ flashcards, onBack }: FlashcardViewProps
 
         {showAnswer && (
           <div className="mt-4 p-4 bg-gray-200 rounded-lg text-gray-800">
-            {currentCard.answer}
+            <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+              {currentCard.answer}
+            </ReactMarkdown>
           </div>
         )}
       </div>
