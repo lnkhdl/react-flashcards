@@ -1,35 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { loadFlashcards } from "./data/loadFlashcards";
+import TopicList from "./components/TopicList";
 
 export default function App() {
+  const [topics, setTopics] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function run() {
       try {
-        const { raw, cards } = await loadFlashcards();
-
-        // Console log a short preview of the raw markdown (first 300 chars)
-        console.log("flashcards.md raw preview:", raw.slice(0, 300));
-
-        // Console log the total number of parsed cards
-        console.log("parsed cards count:", cards.length);
-
-        // Console log the first parsed card (if exists)
-        if (cards.length > 0) {
-          console.log("first card:", cards[0]);
-        } else {
-          console.log("no cards parsed (cards.length === 0)");
-        }
+        const { cards } = await loadFlashcards();
+        // Extract unique topics
+        const uniqueTopics = Array.from(new Set(cards.map((c) => c.topic)));
+        setTopics(uniqueTopics);
       } catch (err) {
         console.error("Error loading flashcards:", err);
+      } finally {
+        setLoading(false);
       }
     }
-
     run();
   }, []);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-slate-900">Check the console for loader output</h1>
-    </div>
-  );
+  const handleSelectTopic = (topic: string) => {
+    console.log("Selected topic:", topic);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-800 text-lg">Loading topics...</p>
+      </div>
+    );
+  }
+
+  return <TopicList topics={topics} onSelect={handleSelectTopic} />;
 }
