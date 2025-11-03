@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { loadFlashcards } from "./data/loadFlashcards";
 import TopicList from "./components/TopicList";
 import SubtopicSelector from "./components/SubtopicSelector";
+import FlashcardView from "./components/FlashcardView";
 
 export default function App() {
   const [cards, setCards] = useState<any[]>([]);
-  const [currentStep, setCurrentStep] = useState<"topics" | "subtopics">("topics");
+  const [currentStep, setCurrentStep] = useState<"topics" | "subtopics" | "flashcards">("topics");
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ export default function App() {
     );
   }
 
-  // Step 2: Show subtopics for selected topic
+  // Step 2: Show subtopics
   if (currentStep === "subtopics" && selectedTopic) {
     const subtopicsForTopic = cards
       .filter((c) => c.topic === selectedTopic)
@@ -57,12 +58,24 @@ export default function App() {
       <SubtopicSelector
         subtopics={uniqueSubtopics}
         onChange={(selected) => setSelectedSubtopics(selected)}
-        onBack={() => setCurrentStep("topics")} // go back to topic selection
+        onBack={() => setCurrentStep("topics")}
         onStart={() => {
-          console.log("Selected Topic:", selectedTopic);
-          console.log("Selected Subtopics:", selectedSubtopics);
-          // TODO: move to flashcards view
+          setCurrentStep("flashcards");
         }}
+      />
+    );
+  }
+
+  // Step 3: Show flashcards
+  if (currentStep === "flashcards" && selectedTopic && selectedSubtopics.length > 0) {
+    const filteredCards = cards.filter(
+      (c) => c.topic === selectedTopic && selectedSubtopics.includes(c.subtopic)
+    );
+
+    return (
+      <FlashcardView
+        flashcards={filteredCards}
+        onBack={() => setCurrentStep("subtopics")}
       />
     );
   }
