@@ -45,7 +45,7 @@ export default function FlashcardView({ flashcards, onBack }: FlashcardViewProps
         <p className="text-gray-900 font-medium">{currentCard.question}</p>
 
         {showAnswer && (
-          <div className="mt-4 p-4 bg-gray-200 rounded-lg text-gray-800">
+          <div className="mt-4 p-4 bg-gray-200 rounded-lg text-gray-800 [&>ul>li]:mb-2">
             <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
               {currentCard.answer}
             </ReactMarkdown>
