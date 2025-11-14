@@ -14,7 +14,7 @@ export default function App() {
   useEffect(() => {
     async function run() {
       try {
-        const { cards: loadedCards } = await loadFlashcards();
+        const loadedCards = await loadFlashcards();
         setCards(loadedCards);
       } catch (err) {
         console.error(err);
