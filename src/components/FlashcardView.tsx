@@ -53,12 +53,13 @@ export default function FlashcardView({ flashcards, onBack }: FlashcardViewProps
         )}
       </div>
 
-      {/* Navigation buttons */}
-      <div className="flex flex-col md:flex-row justify-between gap-2">
+      {/* Navigation buttons (row 1) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-2">
+        {/* Left: Previous (left on md+) */}
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className={`w-full md:w-auto px-6 py-3 rounded-xl shadow font-medium transition duration-200 ${
+          className={`w-full md:w-auto px-6 py-3 rounded-xl shadow font-medium transition duration-200 justify-self-start ${
             currentIndex === 0
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-gray-900 text-white hover:bg-gray-700"
@@ -67,17 +68,19 @@ export default function FlashcardView({ flashcards, onBack }: FlashcardViewProps
           Previous
         </button>
 
+        {/* Center: Show/Hide Answer (center on md+) */}
         <button
           onClick={() => setShowAnswer((prev) => !prev)}
-          className="w-full md:w-auto px-6 py-3 rounded-xl shadow bg-gray-900 text-white hover:bg-gray-700 transition duration-200 font-medium"
+          className="w-full md:w-auto px-6 py-3 rounded-xl shadow bg-gray-900 text-white hover:bg-gray-700 transition duration-200 font-medium justify-self-center"
         >
           {showAnswer ? "Hide Answer" : "Show Answer"}
         </button>
 
+        {/* Right: Next (right on md+) */}
         <button
           onClick={handleNext}
           disabled={currentIndex === flashcards.length - 1}
-          className={`w-full md:w-auto px-6 py-3 rounded-xl shadow font-medium transition duration-200 ${
+          className={`w-full md:w-auto px-6 py-3 rounded-xl shadow font-medium transition duration-200 justify-self-end ${
             currentIndex === flashcards.length - 1
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-gray-900 text-white hover:bg-gray-700"
@@ -87,18 +90,28 @@ export default function FlashcardView({ flashcards, onBack }: FlashcardViewProps
         </button>
       </div>
 
-      <div className="text-center text-gray-700">
-        {currentIndex + 1} / {flashcards.length}
+      {/* Counter centered (row 2) */}
+      {/* 3-col grid on md to ensure the counter is exactly under the center column */}
+      <div className="grid grid-cols-1 md:grid-cols-3 mt-2">
+        <div /> {/* empty left column on md */}
+        <div className="text-center text-gray-700 justify-self-center">
+          {currentIndex + 1} / {flashcards.length}
+        </div>
+        <div /> {/* empty right column on md */}
       </div>
 
-      {/* Back to Subtopics */}
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={onBack}
-          className="w-full md:w-auto bg-gray-300 text-gray-900 px-6 py-3 rounded-xl shadow hover:bg-gray-400 transition duration-200 font-medium"
-        >
-          Back to Subtopics
-        </button>
+      {/* Back to Subtopics centered (row 3) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 mt-2">
+        <div /> {/* empty left */}
+        <div className="flex justify-center">
+          <button
+            onClick={onBack}
+            className="w-full md:w-auto bg-gray-300 text-gray-900 px-6 py-3 rounded-xl shadow hover:bg-gray-400 transition duration-200 font-medium"
+          >
+            Back to Subtopics
+          </button>
+        </div>
+        <div /> {/* empty right */}
       </div>
     </div>
   );
