@@ -1,11 +1,3 @@
-## Java / Strings
-**Q:** Placeholder - What is 2 + 2?  
-**A:**  
-- 4
-- It's the sum of two and two.
-  ```js
-  console.log(2 + 2); // 4
-
 ## Java / Enums
 **Q:** What are enums generally?
 **A:**
@@ -34,7 +26,8 @@ Day.MONDAY, Day.TUESDAY
 **A:**
 - No, enums are not primitive data types; each enum is a reference type (a special kind of class).
 - Every enum implicitly extends `java.lang.Enum<E>`, where E is the enum type itself.
-- By implicitly we mean there is no need to explicitly write `public static final`, Java does it automatically.
+- Because of this, enums cannot extend any other class.
+- Each constant inside an enum is implicitly `public static final` (by implicitly we mean there is no need to explicitly write `public static final`, Java does it automatically).
 
 ## Java / Enums
 **Q:** Are enums singletons?
@@ -47,3 +40,16 @@ Day d1 = Day.MONDAY;
 Day d2 = Day.MONDAY;
 ```
 means both d1 and d2 point to the exact same object in memory.
+
+## Java / Enums
+**Q:** What are the most common built-in methods for enums?
+**A:**
+- `values()`: Returns an array containing all the constants of the enum in the order they are declared.
+- `valueOf(String name)`: Returns the enum constant of the specified enum type with the specified name (must match exactly).
+- `ordinal()`: Returns the position (index) of the constant in the declaration, starting at 0.
+
+## Java / Enums
+**Q:** Can enums have fields, constructors or methods?
+**A:**
+- Yes, enums are classes and can have state and behavior.
+- Important: Enum constructors are always private. You cannot create new instances using new.

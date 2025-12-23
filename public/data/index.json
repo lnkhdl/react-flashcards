@@ -1,3 +1,15 @@
 {
-  "filenames": ["java", "english"]
+  "filenames": [
+    "english",
+    "java-basics",
+    "java-collections",
+    "java-enums",
+    "java-exceptions",
+    "java-generics",
+    "java-lambda-expressions",
+    "java-oop",
+    "java-streams-api",
+    "java-generics",
+    "java-strings"
+  ]
 }
