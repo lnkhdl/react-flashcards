@@ -1,4 +1,3 @@
-
 ## Java / Generics
 **Q:** What are Generics in Java?
 **A:**
